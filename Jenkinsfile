@@ -2,17 +2,18 @@ node {
     stage 'checkout'
     git 'https://gitlab.com/RavisankarCts/hello-world.git' 
     
-    stage 'build'
-    def mvn_version = 'M3'
-    withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
-      sh 'mvn clean install'
+    stage ('build') {
+      def mvn_version = 'M3'
+      withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
+        sh 'mvn clean install'
+      }
     }
-    
+
     stage('Results - 1') {
          junit '**/target/surefire-reports/TEST-*.xml'
          archive 'target/*.jar'
         }
-    
+
     stage 'bake image'
     docker.withRegistry('https://registry.hub.docker.com','docker-hub-credentials') {
         def image = docker.build("ravisankar/ravisankardevops:${env.BUILD_TAG}",'.')
