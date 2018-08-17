@@ -3,7 +3,10 @@ node {
     git 'https://gitlab.com/RavisankarCts/hello-world.git' 
     
     stage 'build'
-    sh 'mvn clean install'
+    def mvn_version = 'M3'
+    withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
+      sh 'mvn clean install'
+    }
     
     stage('Results - 1') {
          junit '**/target/surefire-reports/TEST-*.xml'
