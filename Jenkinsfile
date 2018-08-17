@@ -15,13 +15,13 @@ node {
         }
 
     stage 'bake image'
-    docker.withRegistry('https://registry.hub.docker.com','docker-hub-credentials') {
-        def image = docker.build("ravisankar/ravisankardevops:${env.BUILD_TAG}",'.')
+    docker.withRegistry('https://registry.hub.docker.com','ramana1') {
+        def image = docker.build("ramana/ramana1:${env.BUILD_TAG}",'.')
         
         stage 'test image'
         image.withRun('-p 8888:8888') {springboot ->
         sh 'while ! httping -qc1 http://localhost:8888/info; do sleep 1; done'
-        git 'https://github.com/RavisankarCts/petclinicacceptance.git'
+        git 'https://github.com/ramanurs/spring-framework-petclinic.git'
         sh 'mvn clean verify'
         }
         
