@@ -16,7 +16,7 @@ node {
         }
 
     stage 'bake image'
-    docker.withRegistry('https://registry.hub.docker.com','ramana_auth') {
+    docker.withRegistry('https://registry.hub.docker.com','ramana_dockerhub') {
         def image = docker.build("ramana/ramana1:${env.BUILD_TAG}",'.')
         
         stage 'test image'
