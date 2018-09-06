@@ -1,13 +1,18 @@
 node {
+
+   environment {
+     PATH = "D:/Tools/cygwin64/bin:%PATH%"
+   }
+  
     stage 'checkout'
     
     
     stage ('build') {
       def mvn_version = 'M3'
 	  bat "echo 'build project...'"
-      withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
+      //withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
         bat 'mvn clean install'
-      }
+      //}
     }
 
     stage('Results - 1') {
