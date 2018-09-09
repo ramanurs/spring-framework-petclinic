@@ -5,7 +5,7 @@ node {
    }
   
     stage 'checkout'
-    
+     git 'https://github.com/ramanurs/spring-framework-petclinic.git'
     
     stage ('build') {
       def mvn_version = 'M3'
