@@ -1,2 +1,1 @@
-FROM scratch
-FROM tomcat:8
+FROM tomcat:8.0
