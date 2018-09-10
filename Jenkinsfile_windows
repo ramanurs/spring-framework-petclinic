@@ -23,7 +23,7 @@ node {
     stage 'bake image'
     docker.withRegistry('https://registry.hub.docker.com','ramana_dockerhub') {
 	    bat 'echo "logged in to docker hub..'
-		//bat 'docker build -t 'ramana/ramana1' .
+		bat 'docker build -t 'ramana/ramana1:1.0 .' .
         def image = docker.build("ramana/ramana1:1.0",'.')
         
         stage 'test image'
