@@ -22,25 +22,29 @@ node {
 
     stage 'bake image'
     docker.withRegistry('https://registry.hub.docker.com','ramana_dockerhub') {
-	    bat 'echo "logged in to docker hub..'
+	    bat 'echo "logged in to docker hub.."'
 		
 		bat "docker build -t ramanurs/ramana1:1.0 ." 
 		
         def image = docker.build("ramanurs/ramana1:1.0",'.')
-        
+        bat 'echo "Build docker image.."'
         stage 'test image' 
-        image.withRun('-p 8888:8888') {springboot ->
-        bat 'while ! httping -qc1 http://localhost:8888/info; do sleep 1; done'
-        git 'https://github.com/ramanurs/spring-framework-petclinic.git'
-        bat 'mvn clean verify'
+        /*
+		image.withRun('-p 8888:8888') {
+			springboot ->
+			bat 'while ! httping -qc1 http://localhost:8888/info; do sleep 1; done'
+			//git 'https://github.com/ramanurs/spring-framework-petclinic.git'
+			bat 'mvn clean verify'
         }
+		
         
         stage('Results') {
          junit '**/target/surefire-reports/TEST-*.xml'
          archive 'target/*.jar'
         }
+		*/
         
-        stage 'pubat image'
-        image.pubat()
+        stage 'push image'
+        image.push()
     }
 }
