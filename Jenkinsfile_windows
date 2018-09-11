@@ -26,7 +26,7 @@ node {
 		bat 'docker build -t 'ramana/ramana1:1.0 .' 
         def image = docker.build("ramana/ramana1:1.0",'.')
         
-        stage 'test image'
+        stage 'test image' 
         image.withRun('-p 8888:8888') {springboot ->
         bat 'while ! httping -qc1 http://localhost:8888/info; do sleep 1; done'
         git 'https://github.com/ramanurs/spring-framework-petclinic.git'
