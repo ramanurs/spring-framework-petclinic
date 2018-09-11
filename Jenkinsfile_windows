@@ -23,10 +23,10 @@ node {
     stage 'bake image'
     docker.withRegistry('https://registry.hub.docker.com','ramana_dockerhub') {
 	    bat 'echo "logged in to docker hub..'
-		script {
-		   bat 'docker build -t 'ramana/ramana1:1.0 .' 
-		}
-        def image = docker.build("ramana/ramana1:1.0",'.')
+		
+		bat 'docker build -t 'ramanurs/ramana1:1.0 .' 
+		
+        def image = docker.build("ramanurs/ramana1:1.0",'.')
         
         stage 'test image' 
         image.withRun('-p 8888:8888') {springboot ->
