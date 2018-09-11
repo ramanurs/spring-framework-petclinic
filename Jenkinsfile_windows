@@ -24,7 +24,7 @@ node {
     docker.withRegistry('https://registry.hub.docker.com','ramana_dockerhub') {
 	    bat 'echo "logged in to docker hub..'
 		
-		bat "docker build -t 'ramanurs/ramana1:1.0 ." 
+		bat "docker build -t ramanurs/ramana1:1.0 ." 
 		
         def image = docker.build("ramanurs/ramana1:1.0",'.')
         
