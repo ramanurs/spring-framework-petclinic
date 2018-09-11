@@ -33,6 +33,6 @@ node {
         
         stage 'push image'
         //image.push()
-		bat 'docker push ramanurs/ramana1:1.0"
+		bat 'docker push ramanurs/ramana1:1.0'
     }
 }
