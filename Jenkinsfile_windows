@@ -28,7 +28,7 @@ node {
 		//	springboot ->
 		//	bat 'while ! httping -qc1 http://localhost:8888/info; do sleep 1; done'
 		
-		bat 'docker run -p 8888:8080 -d -name pet ramanurs/ramana1:1.0'
+		bat 'docker run -p 9988:8080 -d --name pet ramanurs/ramana1:1.0'
 		git 'https://github.com/ramanurs/spring-framework-petclinic.git'
 		bat 'mvn clean verify'
         //}
