@@ -18,7 +18,7 @@ node {
     stage 'bake image'
 	withCredentials([string(credentialsId: 'dockerhub_pwd', variable: 'dockerhub_pwd')]) {
 	    bat "echo -p ${dockerhub_pwd} %dockerhub_pwd%'"
-		bat 'docker login -u ramanurs -p ${dockerhub_pwd} '
+		bat 'docker login -u ramanurs -p Rramana1 '
 //    docker.withRegistry('https://registry.hub.docker.com','ramana_dockerhub') {
 	    bat 'echo "logged in to docker hub.."'
 		
