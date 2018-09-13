@@ -4,13 +4,16 @@ pipeline {
 	stages {
 	   stage('Stage - 1'){
 			steps {
-				withCredentials([usernamePassword(credentialsId: 'ramana_dockerhub', passwordVariable: 'dockerhub_pwd', usernameVariable: 'dockerhub_user')]) {
-					bat "echo p $dockerhub_pwd %dockerhub_pwd%'"
-					bat "docker login -u ${dockerhub_user} -p ${dockerhub_pwd}"
-					bat 'echo "logged in to docker hub.."'
+			//	withCredentials([usernamePassword(credentialsId: 'ramana_dockerhub', passwordVariable: 'dockerhub_pwd', usernameVariable: 'dockerhub_user')]) {
+			//		bat "echo p $dockerhub_pwd %dockerhub_pwd%'"
+			//		bat "docker login -u ${dockerhub_user} -p ${dockerhub_pwd}"
+			//		bat 'echo "logged in to docker hub.."'
 		
+				def pom = readMavenPom file: 'pom.xml'
+				bat "echo Project Version: ${pom.version}"
 				}
 			}
 		}
+		
 	}
 }
