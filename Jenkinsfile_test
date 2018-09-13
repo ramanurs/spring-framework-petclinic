@@ -4,7 +4,7 @@ pipeline {
 	stages {
 	   stage('Stage - 1'){
 			steps {
-				withCredentials([string(credentialsId: 'dockerhub_pwd', variable: 'dockerhub_pwd')]) {
+				withCredentials([string(credentialsId: 'dhubpwd', variable: 'dockerhub_pwd')]) {
 					bat "echo p ${dockerhub_pwd} %dockerhub_pwd%'"
 				}
 			}
