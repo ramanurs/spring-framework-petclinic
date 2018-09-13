@@ -5,8 +5,8 @@ pipeline {
 	   stage('Stage - 1'){
 			steps {
 				withCredentials([string(credentialsId: 'dhubpwd', variable: 'dockerhub_pwd')]) {
-					bat "echo p ${dockerhub_pwd} %dockerhub_pwd%'"
-					bat 'docker login -u ramanurs -p ${dockerhub_pwd}'
+					bat "echo p $dockerhub_pwd %dockerhub_pwd%'"
+					bat 'docker login -u ramanurs -p $dockerhub_pwd'
 					bat 'echo "logged in to docker hub.."'
 		
 				}
