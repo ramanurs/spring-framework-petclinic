@@ -16,7 +16,9 @@ node {
     }
 
     stage 'bake image'
-	bat "CURRENT_VERSION=`mvn -s /etc/maven/settings.xml -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive exec:exec`"
+	def project = new XmlSlurper().parseText(readFile('pom.xml'))
+	def CURRENT_VERSION = project.version.text()
+	//bat "CURRENT_VERSION=`mvn -s /etc/maven/settings.xml -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive exec:exec`"
     echo "CURRENT_VERSION=$CURRENT_VERSION"
 	withCredentials([usernamePassword(credentialsId: 'ramana_dockerhub', passwordVariable: 'dockerhub_pwd', usernameVariable: 'dockerhub_user')]) {
 	    
