@@ -20,7 +20,7 @@ node {
     echo "CURRENT_VERSION=$CURRENT_VERSION"
 	withCredentials([usernamePassword(credentialsId: 'ramana_dockerhub', passwordVariable: 'dockerhub_pwd', usernameVariable: 'dockerhub_user')]) {
 	    
-		bat "docker login -u ${dockerhub_user} -p ${dockerhub_pwd} '
+		bat "docker login -u ${dockerhub_user} -p ${dockerhub_pwd}"
 	    bat 'echo "logged in to docker hub.."'
 		
 		bat "docker build -t ramanurs/ramana1:1.0.${env.BUILD_NUMBER} ." 
