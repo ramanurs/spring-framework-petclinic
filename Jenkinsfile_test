@@ -1,7 +1,7 @@
 node {
 	stages {
 	   stage('Stage - 1'){
-			step{
+			steps {
 				withCredentials([string(credentialsId: 'dockerhub_pwd', variable: 'dockerhub_pwd')]) {
 					bat "echo p ${dockerhub_pwd} %dockerhub_pwd%'"
 				}
