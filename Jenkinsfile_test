@@ -10,7 +10,7 @@ pipeline {
 			//		bat 'echo "logged in to docker hub.."'
 		
 				script {
-					def pom = readMavenPom file: 'pom.xml'
+					pom = readMavenPom file: 'pom.xml'
 					bat "echo Project Version: ${pom.version}"
 				}
 			//	}
