@@ -16,17 +16,19 @@ node {
     }
 
     stage 'bake image'
-	withCredentials([string(credentialsId: 'dockerhub_pwd', variable: 'dockerhub_pwd')]) {
-	    bat "echo p ${dockerhub_pwd} %dockerhub_pwd%'"
-		bat 'docker login -u ramanurs -p Rramana1 '
+	CURRENT_VERSION=`mvn -s /etc/maven/settings.xml -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive exec:exec`
+    echo "CURRENT_VERSION=$CURRENT_VERSION"
+	withCredentials([usernamePassword(credentialsId: 'ramana_dockerhub', passwordVariable: 'dockerhub_pwd', usernameVariable: 'dockerhub_user')]) {
+	    
+		bat "docker login -u ${dockerhub_user} -p ${dockerhub_pwd} '
 	    bat 'echo "logged in to docker hub.."'
 		
-		bat "docker build -t ramanurs/ramana1:1.0 ." 
+		bat "docker build -t ramanurs/ramana1:1.0.${env.BUILD_NUMBER} ." 
 		
         //def image = docker.build("ramanurs/ramana1:1.0",'.')
         bat 'echo "Build docker image.."'
 		stage 'test image' 
-		bat 'docker run -p 9988:8080 -d --name pet${} ramanurs/ramana1:1.0'
+		bat 'docker run -p 9988:8080 -d --name pet_${CURRENT_VERSION}_${env.BUILD_NUMBER} ramanurs/ramana1:1.0'
 		git 'https://github.com/ramanurs/spring-framework-petclinic.git'
 		bat 'mvn clean verify'
         
