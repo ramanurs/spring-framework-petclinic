@@ -2,8 +2,10 @@ pipeline {
 	agent any
 	 
    parameters {
-    string(name: 'DOCKER_PUSH_USERNAME', defaultValue: 'ramanurs', description: 'Docker group username for pushing images..'),
-	string(name: 'PROJECT_NAME', defaultValue: 'petclinic1', description: 'project name for creating image..')
+    string(name: 'DOCKER_PUSH_USERNAME', defaultValue: 'ramanurs', description: 'Docker group username for pushing images..')
+	}
+	parameters {
+   string(name: 'PROJECT_NAME', defaultValue: 'petclinic1', description: 'project name for creating image..')
 	}
 	
 	stages {
