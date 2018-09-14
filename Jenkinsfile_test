@@ -16,9 +16,8 @@ pipeline {
 		
 	    }
 	   }
-    stage('bake image') {
+	   stage('Prep bake image'){
 	   steps{
-	   
 			script {
 				pom = readMavenPom file: 'pom.xml'
 				//bat "echo Project Version: ${pom.version}"
@@ -26,8 +25,38 @@ pipeline {
 			}
 			
 			bat "echo Project Version1: ${IMAGE_NAME}"
-
 	   }
+	   
+	   }
+    stage('bake image') {
+	   steps{
+			   
+	   withCredentials([usernamePassword(credentialsId: 'ramana_dockerhub', passwordVariable: 'dockerhub_pwd', usernameVariable: 'dockerhub_user')]) {
+			bat 'echo "logged in to docker hub, building image.."'			
+			bat "docker build -t ${IMAGE_NAME} ." 
+
+			bat 'echo "Build docker image.."'
+		}
+		}
 	}
+	stage('test image'){
+	    steps {
+			bat "docker run -p 9988:8080 -d --name pet_${pom.version}_${env.BUILD_NUMBER} ${IMAGE_NAME} ."
+			git "https://github.com/ramanurs/spring-framework-petclinic.git"
+			bat "mvn clean verify"
+		}
+    }
+    	
+	stage('Results'){
+        steps{	
+			 junit '**/target/surefire-reports/TEST-*.xml'
+			 archive 'target/*.jar'
+		}
+	}
+	
+	stage('push image'){
+       steps {
+			bat "docker push ${IMAGE_NAME}"
+	   }
 	}
 }
