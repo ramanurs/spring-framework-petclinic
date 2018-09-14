@@ -16,7 +16,7 @@ pipeline {
 		
 	    }
 	   }
-	   stage('Prep bake image'){
+	  stage('Prep bake image'){
 	   steps{
 			script {
 				pom = readMavenPom file: 'pom.xml'
@@ -27,7 +27,7 @@ pipeline {
 			bat "echo Project Version1: ${IMAGE_NAME}"
 	   }
 	   
-	   }
+	 }
     stage('bake image') {
 	   steps{
 			   
@@ -59,4 +59,5 @@ pipeline {
 			bat "docker push ${IMAGE_NAME}"
 	   }
 	}
+  }
 }
