@@ -25,7 +25,7 @@ node {
 			//bat "echo Project Version: ${pom.version}"
 			IMAGE_NAME = "${params.DOCKER_PUSH_USERNAME}/${params.PROJECT_NAME}:${pom.version}_${env.BUILD_NUMBER}"
 		}
-		bat "echo Project Version1: ${pom.version}"
+		bat "echo Project Version1: ${IMAGE_NAME}"
 		withCredentials([usernamePassword(credentialsId: 'ramana_dockerhub', passwordVariable: 'dockerhub_pwd', usernameVariable: 'dockerhub_user')]) {
 			bat 'echo "logged in to docker hub, building image.."'			
 			bat "docker build -t ${IMAGE_NAME} ." 
