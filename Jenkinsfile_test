@@ -8,15 +8,17 @@ pipeline {
 	
 	stages {
 	   stage('checkout'){
-		 git 'https://github.com/ramanurs/spring-framework-petclinic.git'
+	     steps {
+		 bat "git clone 'https://github.com/ramanurs/spring-framework-petclinic.git'"
 		
 		  bat "echo 'build project...'"
 			bat 'mvn clean install'
 		
+	    }
 	   }
     stage('bake image') {
 	   steps{
-	    step {
+	   
 			script {
 				pom = readMavenPom file: 'pom.xml'
 				//bat "echo Project Version: ${pom.version}"
@@ -24,8 +26,7 @@ pipeline {
 			}
 			
 			bat "echo Project Version1: ${IMAGE_NAME}"
-			
-		}
+
 	   }
 	}
 	}
