@@ -7,7 +7,7 @@ pipeline {
 	}
 	
 	stages {
-	   stage('checkout'){
+	   stage('build war package'){
 	     steps {
 		 //bat "git clone https://github.com/ramanurs/spring-framework-petclinic.git"
 		
@@ -41,7 +41,7 @@ pipeline {
 	}
 	stage('test image'){
 	    steps {
-			bat "docker run -p 9988:8080 -d --name pet_${pom.version}_${env.BUILD_NUMBER} ${IMAGE_NAME} ."
+			bat "docker run -p 9988:8080 -d --name pet_${pom.version}_${env.BUILD_NUMBER} ${IMAGE_NAME}"
 			//git "https://github.com/ramanurs/spring-framework-petclinic.git"
 			bat "mvn clean verify"
 		}
