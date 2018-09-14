@@ -21,13 +21,13 @@ node {
 		bat "echo Project Version1: ${pom.version}"
 		withCredentials([usernamePassword(credentialsId: 'ramana_dockerhub', passwordVariable: 'dockerhub_pwd', usernameVariable: 'dockerhub_user')]) {
 			bat 'echo "logged in to docker hub, building image.."'			
-			bat "docker build -t ramanurs/ramana1:${pom.version}_${env.BUILD_NUMBER} ." 
+			bat "docker build -t ramanurs/petclinic1:${pom.version}_${env.BUILD_NUMBER} ." 
 
 			bat 'echo "Build docker image.."'
 		stage 'test image' 
-			bat 'docker run -p 9988:8080 -d --name pet_${pom.version}_${env.BUILD_NUMBER} ramanurs/ramana1:1.0'
-			git 'https://github.com/ramanurs/spring-framework-petclinic.git'
-			bat 'mvn clean verify'
+			bat "docker run -p 9988:8080 -d --name pet_${pom.version}_${env.BUILD_NUMBER} ramanurs/petclinic1::${pom.version}_${env.BUILD_NUMBER} ."
+			git "https://github.com/ramanurs/spring-framework-petclinic.git"
+			bat "mvn clean verify"
 				   
 		stage('Results') {
 			 junit '**/target/surefire-reports/TEST-*.xml'
@@ -37,6 +37,6 @@ node {
 			
 			stage 'push image'
 			//image.push()
-			bat 'docker push ramanurs/ramana1:1.0'
+			bat 'docker push ramanurs/petclinic1:${pom.version}_${env.BUILD_NUMBER}'
 		}
 }
