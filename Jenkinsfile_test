@@ -13,6 +13,7 @@ pipeline {
 					pom = readMavenPom file: 'pom.xml'
 					bat "echo Project Version: ${pom.version}"
 				}
+				bat "echo Project Version1: ${pom.version}"
 			//	}
 			}
 		}
