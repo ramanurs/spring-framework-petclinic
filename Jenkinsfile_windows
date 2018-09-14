@@ -1,9 +1,5 @@
 node {
 
-   environment {
-     PATH = "D:/Tools/cygwin64/bin:%PATH%"
-   }
-   
   parameters {
     string(name: 'DOCKER_PUSH_USERNAME', defaultValue: 'ramanurs', description: 'Docker group username for pushing images..')
 	string(name: 'PROJECT_NAME', defaultValue: 'petclinic1', description: 'project name for creating image..')
@@ -23,7 +19,7 @@ node {
 		script {
 			pom = readMavenPom file: 'pom.xml'
 			//bat "echo Project Version: ${pom.version}"
-			IMAGE_NAME = "${params.DOCKER_PUSH_USERNAME}/${params.PROJECT_NAME}:${pom.version}_${env.BUILD_NUMBER}"
+			IMAGE_NAME = ${params.DOCKER_PUSH_USERNAME}/${params.PROJECT_NAME}:${pom.version}_${env.BUILD_NUMBER}
 		}
 		bat "echo Project Version1: ${IMAGE_NAME}"
 		withCredentials([usernamePassword(credentialsId: 'ramana_dockerhub', passwordVariable: 'dockerhub_pwd', usernameVariable: 'dockerhub_user')]) {
