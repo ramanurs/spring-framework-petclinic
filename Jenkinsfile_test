@@ -20,7 +20,7 @@ pipeline {
 			script {
 				pom = readMavenPom file: 'pom.xml'
 				//bat "echo Project Version: ${pom.version}"
-				IMAGE_NAME = ${params.DOCKER_PUSH_USERNAME}/${params.PROJECT_NAME}:${pom.version}_${env.BUILD_NUMBER}
+				IMAGE_NAME = "${params.DOCKER_PUSH_USERNAME}/${params.PROJECT_NAME}:${pom.version}_${env.BUILD_NUMBER}"
 			}
 			
 			bat "echo Project Version1: ${IMAGE_NAME}"
