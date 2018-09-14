@@ -36,10 +36,10 @@ node {
 			git "https://github.com/ramanurs/spring-framework-petclinic.git"
 			bat "mvn clean verify"
 				   
-		stage('Results') {
+		stage('Results') 
 			 junit '**/target/surefire-reports/TEST-*.xml'
 			 archive 'target/*.jar'
-			}	
+			
 		   
 			
 			stage 'push image'
