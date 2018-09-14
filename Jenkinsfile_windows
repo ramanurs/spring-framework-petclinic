@@ -3,6 +3,11 @@ node {
    environment {
      PATH = "D:/Tools/cygwin64/bin:%PATH%"
    }
+   
+   parameters {
+    string(name: 'DOCKER_PUSH_USERNAME', defaultValue: 'ramanurs', description: 'Docker group username for pushing images..'),
+	string(name: 'PROJECT_NAME', defaultValue: 'petclinic1', description: 'project name for creating image..')
+	}
   
     stage 'checkout'
      git 'https://github.com/ramanurs/spring-framework-petclinic.git'
@@ -17,15 +22,16 @@ node {
 		script {
 			pom = readMavenPom file: 'pom.xml'
 			//bat "echo Project Version: ${pom.version}"
+			IMAGE_NAME = "${env.DOCKER_PUSH_USERNAME}/${env.PROJECT_NAME}:${pom.version}_${env.BUILD_NUMBER}"
 		}
 		bat "echo Project Version1: ${pom.version}"
 		withCredentials([usernamePassword(credentialsId: 'ramana_dockerhub', passwordVariable: 'dockerhub_pwd', usernameVariable: 'dockerhub_user')]) {
 			bat 'echo "logged in to docker hub, building image.."'			
-			bat "docker build -t ramanurs/petclinic1:${pom.version}_${env.BUILD_NUMBER} ." 
+			bat "docker build -t ${env.DOCKER_PUSH_USERNAME}/petclinic1:${pom.version}_${env.BUILD_NUMBER} ." 
 
 			bat 'echo "Build docker image.."'
 		stage 'test image' 
-			bat "docker run -p 9988:8080 -d --name pet_${pom.version}_${env.BUILD_NUMBER} ramanurs/petclinic1::${pom.version}_${env.BUILD_NUMBER} ."
+			bat "docker run -p 9988:8080 -d --name pet_${pom.version}_${env.BUILD_NUMBER} ${env.DOCKER_PUSH_USERNAME}/petclinic1::${pom.version}_${env.BUILD_NUMBER} ."
 			git "https://github.com/ramanurs/spring-framework-petclinic.git"
 			bat "mvn clean verify"
 				   
@@ -37,6 +43,6 @@ node {
 			
 			stage 'push image'
 			//image.push()
-			bat 'docker push ramanurs/petclinic1:${pom.version}_${env.BUILD_NUMBER}'
+			bat 'docker push ${env.DOCKER_PUSH_USERNAME}/petclinic1:${pom.version}_${env.BUILD_NUMBER}'
 		}
 }
